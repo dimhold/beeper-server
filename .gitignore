@@ -4,3 +4,16 @@
 *.jar
 *.war
 *.ear
+
+# Eclipse #
+.settings
+.classpath
+.project
+bin
+
+# Maven #
+target
+
+# Vim #
+*.swp
+*.swo
