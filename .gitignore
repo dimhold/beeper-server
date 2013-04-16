@@ -2,4 +2,5 @@ test-output
 target
 .classpath
 .project
+.settings
 bin
