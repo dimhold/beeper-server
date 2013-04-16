@@ -1,19 +1,5 @@
-*.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# Eclipse #
-.settings
+test-output
+target
 .classpath
 .project
 bin
-
-# Maven #
-target
-
-# Vim #
-*.swp
-*.swo
