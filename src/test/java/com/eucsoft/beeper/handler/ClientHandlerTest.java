@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 @PrepareForTest(ClientHandler.class)
 public class ClientHandlerTest {
 	
-	
+	public void onConnect() {
+		
+	}
 
 }
