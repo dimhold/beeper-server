@@ -1,11 +1,18 @@
 package com.eucsoft.beeper.handler;
 
+import java.util.HashSet;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.eucsoft.beeper.Beeper;
+import com.eucsoft.beeper.MainTest;
+import com.eucsoft.beeper.model.Room;
 import com.eucsoft.beeper.model.User;
 
+@PrepareForTest(MainTest.class)
 public class ClientHandlerTest {
 	
 	@Test
@@ -15,6 +22,21 @@ public class ClientHandlerTest {
 		
 		int expected = 1;
 		int actual = Beeper.getInstance().getUsers().size();
+		Assert.assertEquals(actual, expected);
+	}
+	
+	@Test
+	public void onConnect_user_has_device_info() {
+		String expected = "some user information";
+		
+		ClientHandler clientHandler = new ClientHandler();
+		clientHandler.onConnect(new User(), expected);
+		HashSet<User> hs = new HashSet<User>();
+		
+		User user = Beeper.getInstance().getUsers().iterator().next();
+		
+		String actual = user.getDeviceInfo();
+		
 		Assert.assertEquals(actual, expected);
 	}
 
@@ -30,6 +52,16 @@ public class ClientHandlerTest {
 	
 	@Test
 	public void onMessageBegin(User user) {
+		ClientHandler clientHandler = new ClientHandler();
+		Room room = new Room();
+		User user1 = new User();
+		User user2 = new User();
+		user1.setRoom(room);
+		user2.setRoom(room);
+		room.addUser(user1);
+		room.addUser(user2);
+		
+		clientHandler.onMessageBegin(user1);
 	}
 	
 	@Test
