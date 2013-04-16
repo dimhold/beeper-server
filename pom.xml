@@ -8,15 +8,18 @@
 	<name>beeper-server</name>
 	<url>http://maven.apache.org</url>
 	<properties>
+		<testng.version>6.8.1</testng.version>
 		<powermock.version>1.5</powermock.version>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
+		<netty.all.version>4.0.0.CR1</netty.all.version>
+		
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.1.1</version>
+			<version>${testng.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -31,6 +34,10 @@
 			<version>${powermock.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>${netty.all.version}</version>
+		</dependency>
 	</dependencies>
 </project>
