@@ -10,17 +10,34 @@ import io.netty.channel.udt.nio.NioUdtProvider;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.eucsoft.beeper.Beeper;
+import com.eucsoft.beeper.handler.ClientHandler;
+import com.eucsoft.beeper.model.User;
+
 public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
 
     private static final Logger log = Logger.getLogger(ClientConnectionHandler.class.getName());
+    
+    private Beeper beeper = Beeper.getInstance();
+    private User user = new User();
+    
+    public ClientConnectionHandler(User user) {
+		super();
+		ClientHandler clientHandler = new ClientHandler();
+		this.user = user;
+		beeper.addUser(user);
+		beeper.addClientHandler(user, clientHandler);
+	}
 
-    @Override
+	@Override
     public void inboundBufferUpdated(final ChannelHandlerContext ctx,
             final ByteBuf in) {
-        final ByteBuf out = ctx.nextOutboundByteBuffer();
+    	ClientHandler handler = beeper.getClientHandler(user);
+    	user.getRoom();
+        /*final ByteBuf out = ctx.nextOutboundByteBuffer();
         out.discardReadBytes();
         out.writeBytes(in);
-        ctx.flush();
+        ctx.flush();*/
     }
 
     @Override

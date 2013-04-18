@@ -12,6 +12,7 @@ import io.netty.handler.logging.LoggingHandler;
 
 import java.util.concurrent.ThreadFactory;
 
+import com.eucsoft.beeper.model.User;
 import com.eucsoft.beeper.server.util.UtilThreadFactory;
 
 public class Server {
@@ -43,7 +44,7 @@ public class Server {
 								throws Exception {
 							ch.pipeline().addLast(
 									new LoggingHandler(LogLevel.INFO),
-									new ClientConnectionHandler());
+									new ClientConnectionHandler(new User()));
 						}
 					});
 			// Start the server.
