@@ -22,7 +22,7 @@ public class ByteBufUtils {
 		     result.writeByte(b);
 		     if(b == END){
 		    	 reminder.clear();
-		    	 byteBuf.getBytes(i,reminder);
+		    	 //byteBuf.getBytes(i,reminder);
 		    	 return result;
 		     }
 		     //System.out.println((char) b);

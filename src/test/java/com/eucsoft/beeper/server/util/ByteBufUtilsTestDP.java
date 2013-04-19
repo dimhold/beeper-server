@@ -1,8 +1,5 @@
 package com.eucsoft.beeper.server.util;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -20,19 +17,21 @@ import org.testng.ITestContext;
 import org.testng.annotations.DataProvider;
 
 public class ByteBufUtilsTestDP {
-	
+
 	private static final int TEST_DATA_COUNT = 10;
 
 	@DataProvider
-	public static Iterator<Object[]> fileDataProvider(ITestContext context) {
+	public static Iterator<Object[]> nextCommandComplexTest(ITestContext context) {
 		// Get the input file path from the ITestContext
-		
-		/*String inputFile = context.getCurrentXmlTest().getParameter("filenamePath");
-		// Get a list of String file content (line items) from the test file.
-		List<String> testData = getFileContentList(inputFile);
 
-		// We will be returning an iterator of Object arrays so create that
-		// first.
+		/*
+		 * String inputFile =
+		 * context.getCurrentXmlTest().getParameter("filenamePath"); // Get a
+		 * list of String file content (line items) from the test file.
+		 * List<String> testData = getFileContentList(inputFile);
+		 * 
+		 * // We will be returning an iterator of Object arrays so create that
+		 * // first.
 		 */
 		List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
 
@@ -40,27 +39,26 @@ public class ByteBufUtilsTestDP {
 				"{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}",
 				"{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}",
 				"{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}" };
-		
+
 		StringBuilder entireString = new StringBuilder();
-		for(String s : strings){
+		for (String s : strings) {
 			entireString.append(s);
 		}
-		
+
 		Random rand = new Random();
 		List<String> testData;
-		for (int i =0;i<TEST_DATA_COUNT;i++){
+		for (int i = 0; i < TEST_DATA_COUNT; i++) {
 			testData = new ArrayList<>();
 			int k = 0;
 			int max = entireString.length();
-			while(k<max){
-				int r = rand.nextInt(max-k)+1;
-				testData.add(entireString.substring(k, k+r));
-				k +=r;
+			while (k < max) {
+				int r = rand.nextInt(max - k) + 1;
+				testData.add(entireString.substring(k, k + r));
+				k += r;
 			}
-			dataToBeReturned.add(new Object[] {testData.toArray(new String[testData.size()]),strings});
+			dataToBeReturned.add(new Object[] {
+					testData.toArray(new String[testData.size()]), strings });
 		}
-
-		
 
 		// Populate our List of Object arrays with the file content.
 		/*
@@ -70,6 +68,40 @@ public class ByteBufUtilsTestDP {
 		// return the iterator - testng will initialize the test class and calls
 		// the
 		// test method with each of the content of this iterator.
+		return dataToBeReturned.iterator();
+	}
+
+	@DataProvider
+	public static Iterator<Object[]> nextCommandPartCommandTest(
+			ITestContext context) {
+		List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+
+		dataToBeReturned.add(new Object[] { "{\"command\":\"message\"" });
+
+		return dataToBeReturned.iterator();
+	}
+
+	@DataProvider
+	public static Iterator<Object[]> nextCommandEntireCommandTest(
+			ITestContext context) {
+		List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+
+		dataToBeReturned
+				.add(new Object[] { "{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}" });
+
+		return dataToBeReturned.iterator();
+	}
+
+	@DataProvider
+	public static Iterator<Object[]> nextCommandMoreThanCommandTest(
+			ITestContext context) {
+		List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+
+		dataToBeReturned
+				.add(new Object[] {
+						"{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}",
+						"{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}" });
+
 		return dataToBeReturned.iterator();
 	}
 
