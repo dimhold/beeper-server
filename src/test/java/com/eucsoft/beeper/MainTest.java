@@ -1,6 +1,6 @@
 package com.eucsoft.beeper;
 
-import org.powermock.api.mockito.PowerMockito;
+import static org.powermock.api.mockito.PowerMockito.*;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,8 +15,8 @@ public class MainTest {
 	@Test
 	public void demoStaticMethodMocking() throws Exception {
 		String expected = "successful";
-		MainTest main = PowerMockito.mock(MainTest.class);
-		PowerMockito.when(main.test()).thenReturn(expected);
+		MainTest main = mock(MainTest.class);
+		when(main.test()).thenReturn(expected);
 		
 		String actual = main.test();
 
