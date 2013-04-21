@@ -1,54 +1,47 @@
 package com.eucsoft.beeper.server.util;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandsReader {
-	
-	private ByteBuf reminder = Unpooled.buffer(); 
-	
+
+	private byte[] reminder = new byte[0];
+
 	private static final byte START = '{';
 	private static final byte END = '}';
-	
-	public List<ByteBuf> getCommands(ByteBuf byteBuf){
-		List<ByteBuf> result = new ArrayList<>();
-		ByteBuf buf = Unpooled.buffer();
-		
-		/*while (!reminder.getBoolean(0)){
-			reminder.readByte();
-		}*/
-			
-		reminder.writeBytes(byteBuf);
-			/*System.out.println("true");;
-		} else {
-			System.out.println("false");
-		}*/
-		
-		
-		boolean messageStarted = false;
+
+	public List<byte[]> getCommands(byte[] buffer) {
+		List<byte[]> result = new ArrayList<>();
 		int lastEndIndex = 0;
-		int dataEndIndex = 0;
-		for (int i = 0; i < reminder.capacity(); i ++) {
-		     byte b = byteBuf.getByte(i);
-		     buf.writeByte(b);
-		     if(b == END){
-		    	 lastEndIndex = i+1;
-		    	 result.add(buf);
-		    	 buf = Unpooled.buffer();
-		    	 //buf = reminder.copy();
-		    	 //reminder = byteBuf.copy(i+1,byteBuf.capacity()-1-i);
-		     }
-		     if(b==0){
-		    	 dataEndIndex=i;
-		    	 break;
-		     }
-		     //System.out.println((char) b);
+		for (int i = 0; i < buffer.length; i++) {
+			if (buffer[i] == END) {
+				// TODO: change array creation using System.arraycopy
+				byte[] res = new byte[1 + reminder.length + i - lastEndIndex];
+				int index = 0;
+				for (; index < reminder.length; index++) {
+					res[index] = reminder[index];
+				}
+				for (int k = lastEndIndex; k < i + 1; k++) {
+					res[index] = buffer[k];
+					index++;
+				}
+
+				result.add(res);
+				reminder = new byte[0];
+				lastEndIndex = i + 1;
+			}
 		}
-		reminder = reminder.copy(lastEndIndex, dataEndIndex);
-		reminder.setIndex(0, reminder.capacity()-1-lastEndIndex);
+
+		reminder = joinArrays(reminder,
+				Arrays.copyOfRange(buffer, lastEndIndex, buffer.length));
+		return result;
+	}
+
+	private byte[] joinArrays(byte[] a, byte[] b) {
+		byte[] result = new byte[a.length + b.length];
+		System.arraycopy(a, 0, result, 0, a.length);
+		System.arraycopy(b, 0, result, a.length, b.length);
 		return result;
 	}
 }
