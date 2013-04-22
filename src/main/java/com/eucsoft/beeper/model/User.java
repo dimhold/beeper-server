@@ -6,6 +6,14 @@ public class User {
 	
 	private Room room;
 	
+	public User() {
+
+	}
+	
+	public User(String deviceInfo) {
+		this.deviceInfo = deviceInfo;
+	}
+
 	public String getDeviceInfo() {
 		return deviceInfo;
 	}
@@ -18,7 +26,7 @@ public class User {
 		return room;
 	}
 
-	public void setRoom(Room room) {
+	void setRoom(Room room) {
 		this.room = room;
 	}
 	

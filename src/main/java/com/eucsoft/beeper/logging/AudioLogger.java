@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.eucsoft.beeper.model.User;
@@ -51,7 +51,7 @@ public class AudioLogger {
 	
 	private String getPrefix(User sender) {
 		StringBuilder prefixes = new StringBuilder();
-		prefixes.append(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(new Date())).append(PREFIX_DELIMITER);
+		prefixes.append(new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date())).append(PREFIX_DELIMITER);
 		prefixes.append(String.valueOf(sender.getRoom().hashCode())).append(PREFIX_DELIMITER);
 		prefixes.append(sender.getDeviceInfo());
 		for (User nextReceiver : sender.getRoom().getUsers()) {

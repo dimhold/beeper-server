@@ -52,8 +52,6 @@ public class ClientHandlerTest {
 		Room room = new Room();
 		User user1 = new User();
 		User user2 = new User();
-		user1.setRoom(room);
-		user2.setRoom(room);
 		room.addUser(user1);
 		room.addUser(user2);
 
