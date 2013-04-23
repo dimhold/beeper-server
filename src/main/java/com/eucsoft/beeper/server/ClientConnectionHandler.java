@@ -35,7 +35,7 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
     public void inboundBufferUpdated(final ChannelHandlerContext ctx,
             final ByteBuf in) {
     	ClientHandler handler = beeper.getClientHandler(user);
-    	handler.onMessageBegin(user);
+    	handler.onMessageBegin();
         /*final ByteBuf out = ctx.nextOutboundByteBuffer();
         out.discardReadBytes();
         out.writeBytes(in);

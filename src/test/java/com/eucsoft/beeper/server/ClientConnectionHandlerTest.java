@@ -23,7 +23,7 @@ public class ClientConnectionHandlerTest {
 		
 		handler.inboundBufferUpdated(null, in);
 		//ClientHandler clientHandler = Beeper.getInstance().getClientHandler(user);
-		verify(clientHandler, times(1)).onMessageBegin(user);
+		verify(clientHandler, times(1)).onMessageBegin();
 		
 	}
 }

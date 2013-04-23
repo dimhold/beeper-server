@@ -16,7 +16,7 @@ public class ClientHandlerTest {
 	@Test
 	public void onConnect() {
 		ClientHandler clientHandler = new ClientHandler();
-		clientHandler.onConnect(new User(), "some user information");
+		clientHandler.onConnect("some user information");
 
 		int expected = 1;
 		int actual = Beeper.getInstance().getUsers().size();
@@ -28,7 +28,7 @@ public class ClientHandlerTest {
 		String expected = "some user information";
 
 		ClientHandler clientHandler = new ClientHandler();
-		clientHandler.onConnect(new User(), expected);
+		clientHandler.onConnect(expected);
 
 		User user = Beeper.getInstance().getUsers().iterator().next();
 
@@ -40,7 +40,7 @@ public class ClientHandlerTest {
 	@Test
 	public void onGetRoom() {
 		ClientHandler clientHandler = new ClientHandler();
-		clientHandler.onGetRoom(new User());
+		clientHandler.onGetRoom();
 
 		int expected = 1;
 		int actual = Beeper.getInstance().getBench().size();
@@ -57,9 +57,9 @@ public class ClientHandlerTest {
 		room.addUser(user2);
 
 		ClientHandler clientHandler2 = mock(ClientHandler.class);
-		clientHandler.onMessageBegin(user1);
+		clientHandler.onMessageBegin();
 		
-		verify(clientHandler2).sendMessageBegin(user2);
+		verify(clientHandler2).sendMessageBegin();
 	}
 
 	@Test
@@ -72,9 +72,9 @@ public class ClientHandlerTest {
 		room.addUser(user2);
 
 		ClientHandler clientHandler2 = mock(ClientHandler.class);
-		clientHandler.onMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user1);
+		clientHandler.onMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes());
 		
-		verify(clientHandler2).sendMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user2);
+		verify(clientHandler2).sendMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes());
 	}
 
 	@Test
@@ -87,9 +87,9 @@ public class ClientHandlerTest {
 		room.addUser(user2);
 
 		ClientHandler clientHandler2 = mock(ClientHandler.class);
-		clientHandler.onMessageEnd(user1);
+		clientHandler.onMessageEnd();
 
-		verify(clientHandler2).sendMessageEnd(user2);
+		verify(clientHandler2).sendMessageEnd();
 	}
 
 	@Test
@@ -97,11 +97,11 @@ public class ClientHandlerTest {
 		User user = new User();
 
 		ClientHandler clientHandler = new ClientHandler();
-		clientHandler.onConnect(user, "some user information");
+		clientHandler.onConnect("some user information");
 
 		assertEquals(Beeper.getInstance().getUsers().size(), 1);
 		
-		clientHandler.onDisconnect(user);
+		clientHandler.onDisconnect();
 		assertEquals(Beeper.getInstance().getUsers().size(), 0);
 	}
 
