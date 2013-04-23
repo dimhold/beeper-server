@@ -1,19 +1,16 @@
 package com.eucsoft.beeper.handler;
 
 import static org.testng.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.annotations.Test;
 
 import com.eucsoft.beeper.Beeper;
-import com.eucsoft.beeper.MainTest;
 import com.eucsoft.beeper.model.Room;
 import com.eucsoft.beeper.model.User;
 
-@PrepareForTest(MainTest.class)
+@PrepareForTest(ClientHandler.class)
 public class ClientHandlerTest {
 
 	@Test
@@ -64,7 +61,7 @@ public class ClientHandlerTest {
 		ClientHandler clientHandler2 = mock(ClientHandler.class);
 		clientHandler.onMessageBegin(user1);
 		
-		verify(clientHandler2, times(1)).sendMessageBegin(user2);
+		verify(clientHandler2).sendMessageBegin(user2);
 	}
 
 	@Test
@@ -81,7 +78,7 @@ public class ClientHandlerTest {
 		ClientHandler clientHandler2 = mock(ClientHandler.class);
 		clientHandler.onMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user1);
 		
-		verify(clientHandler2, times(1)).sendMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user2);
+		verify(clientHandler2).sendMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user2);
 	}
 
 	@Test
@@ -98,7 +95,7 @@ public class ClientHandlerTest {
 		ClientHandler clientHandler2 = mock(ClientHandler.class);
 		clientHandler.onMessageEnd(user1);
 
-		verify(clientHandler2, times(1)).sendMessageEnd(user2);
+		verify(clientHandler2).sendMessageEnd(user2);
 	}
 
 	@Test
