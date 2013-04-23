@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 public class CommandsReaderTest {
@@ -13,15 +14,17 @@ public class CommandsReaderTest {
 	public void getCommandsPartCommandTest(String testString) {
 		CommandsReader bufUtils = new CommandsReader();
 		List<byte[]> res = bufUtils.getCommands(testString.getBytes());
-		Assert.assertTrue(res.isEmpty());
+		
+		assertTrue(res.isEmpty());
 	}
 
 	@Test(dataProviderClass = CommandsReaderTestDP.class, dataProvider = "getCommandsEntireCommandTest")
 	public void getCommandsEntireCommandTest(String testString) {
 		CommandsReader bufUtils = new CommandsReader();
 		List<byte[]> res = bufUtils.getCommands(testString.getBytes());
-		Assert.assertEquals(res.size(), 1);
-		Assert.assertTrue(Arrays.equals(res.get(0), testString.getBytes()));
+		
+		assertEquals(res.size(), 1);
+		assertTrue(Arrays.equals(res.get(0), testString.getBytes()));
 	}
 
 	@Test(dataProviderClass = CommandsReaderTestDP.class, dataProvider = "getCommandsMoreThanCommandTest")
@@ -29,8 +32,9 @@ public class CommandsReaderTest {
 			String expected) {
 		CommandsReader bufUtils = new CommandsReader();
 		List<byte[]> res = bufUtils.getCommands(testString.getBytes());
-		Assert.assertEquals(res.size(), 1);
-		Assert.assertTrue(Arrays.equals(res.get(0), expected.getBytes()));
+		
+		assertEquals(res.size(), 1);
+		assertTrue(Arrays.equals(res.get(0), expected.getBytes()));
 	}
 
 	@Test(dataProviderClass = CommandsReaderTestDP.class, dataProvider = "getCommandsSeveralCommandsTest")
@@ -38,9 +42,9 @@ public class CommandsReaderTest {
 			List<String> expected) {
 		CommandsReader bufUtils = new CommandsReader();
 		List<byte[]> res = bufUtils.getCommands(testString.getBytes());
-		Assert.assertEquals(res.size(), expected.size());
+		assertEquals(res.size(), expected.size());
 		for (int i = 0; i < res.size(); i++) {
-			Assert.assertTrue(Arrays.equals(res.get(i), expected.get(i)
+			assertTrue(Arrays.equals(res.get(i), expected.get(i)
 					.getBytes()));
 		}
 	}
@@ -55,10 +59,10 @@ public class CommandsReaderTest {
 			res.addAll(bufUtils.getCommands(s.getBytes()));
 		}
 
-		Assert.assertEquals(expected.length, res.size());
+		assertEquals(expected.length, res.size());
 
 		for (int i = 0; i < res.size(); i++) {
-			Assert.assertTrue(Arrays.equals(res.get(i), expected[i].getBytes()));
+			assertTrue(Arrays.equals(res.get(i), expected[i].getBytes()));
 		}
 
 	}

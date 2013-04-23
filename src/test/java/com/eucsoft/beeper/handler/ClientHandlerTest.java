@@ -1,7 +1,11 @@
 package com.eucsoft.beeper.handler;
 
+import static org.testng.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.eucsoft.beeper.Beeper;
@@ -19,7 +23,7 @@ public class ClientHandlerTest {
 
 		int expected = 1;
 		int actual = Beeper.getInstance().getUsers().size();
-		Assert.assertEquals(actual, expected);
+		assertEquals(actual, expected);
 	}
 
 	@Test
@@ -33,21 +37,21 @@ public class ClientHandlerTest {
 
 		String actual = user.getDeviceInfo();
 
-		Assert.assertEquals(actual, expected);
+		assertEquals(actual, expected);
 	}
 
 	@Test
-	public void onGetRoom(User user) {
+	public void onGetRoom() {
 		ClientHandler clientHandler = new ClientHandler();
 		clientHandler.onGetRoom(new User());
 
 		int expected = 1;
 		int actual = Beeper.getInstance().getBench().size();
-		Assert.assertEquals(actual, expected);
+		assertEquals(actual, expected);
 	}
 
 	@Test
-	public void onMessageBegin(User user) {
+	public void onMessageBegin() {
 		ClientHandler clientHandler = new ClientHandler();
 		Room room = new Room();
 		User user1 = new User();
@@ -57,37 +61,74 @@ public class ClientHandlerTest {
 		room.addUser(user1);
 		room.addUser(user2);
 
-		ClientHandler clientHandler2 = Beeper.getInstance().getClientHandler(user2);
-
-		// Check that clientHandler2.sendMessageBigein is triggered;
+		ClientHandler clientHandler2 = mock(ClientHandler.class);
+		clientHandler.onMessageBegin(user1);
+		
+		verify(clientHandler2, times(1)).sendMessageBegin(user2);
 	}
 
 	@Test
-	public void onMessage(byte[] message, User user) {
+	public void onMessage() {
+		ClientHandler clientHandler = new ClientHandler();
+		Room room = new Room();
+		User user1 = new User();
+		User user2 = new User();
+		user1.setRoom(room);
+		user2.setRoom(room);
+		room.addUser(user1);
+		room.addUser(user2);
+
+		ClientHandler clientHandler2 = mock(ClientHandler.class);
+		clientHandler.onMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user1);
+		
+		verify(clientHandler2, times(1)).sendMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user2);
 	}
 
 	@Test
-	public void onMessageEnd(User user) {
+	public void onMessageEnd() {
+		ClientHandler clientHandler = new ClientHandler();
+		Room room = new Room();
+		User user1 = new User();
+		User user2 = new User();
+		user1.setRoom(room);
+		user2.setRoom(room);
+		room.addUser(user1);
+		room.addUser(user2);
+
+		ClientHandler clientHandler2 = mock(ClientHandler.class);
+		clientHandler.onMessageEnd(user1);
+
+		verify(clientHandler2, times(1)).sendMessageEnd(user2);
 	}
 
 	@Test
-	public void onDisconnect(User user) {
+	public void onDisconnect() {
+		User user = new User();
+
+		ClientHandler clientHandler = new ClientHandler();
+		clientHandler.onConnect(user, "some user information");
+
+		assertEquals(Beeper.getInstance().getUsers().size(), 1);
+		
+		clientHandler.onDisconnect(user);
+		assertEquals(Beeper.getInstance().getUsers().size(), 0);
 	}
 
 	@Test
-	public void sendMessageBegin(User user) {
+	public void sendMessageBegin() {
+		
 	}
 
 	@Test
-	public void sendMessage(byte[] message) {
+	public void sendMessage() {
 	}
 
 	@Test
-	public void sendMessageEnd(User user) {
+	public void sendMessageEnd() {
 	}
 
 	@Test
-	public void sendChangeRoom(User user) {
+	public void sendChangeRoom() {
 	}
 
 }
