@@ -79,11 +79,24 @@ public class ClientHandlerTest {
 		ClientHandler clientHandler2 = Beeper.getInstance().getClientHandler(user2);
 		verify(clientHandler2, times(1)).sendMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user2);
 		
-		clientHandler.onMessageBegin(user1);
+		clientHandler.onMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes(), user1);
 	}
 
 	@Test
 	public void onMessageEnd(User user) {
+		ClientHandler clientHandler = new ClientHandler();
+		Room room = new Room();
+		User user1 = new User();
+		User user2 = new User();
+		user1.setRoom(room);
+		user2.setRoom(room);
+		room.addUser(user1);
+		room.addUser(user2);
+
+		ClientHandler clientHandler2 = Beeper.getInstance().getClientHandler(user2);
+		verify(clientHandler2, times(1)).sendMessageEnd(user2);
+		
+		clientHandler.onMessageEnd(user1);
 	}
 
 	@Test
