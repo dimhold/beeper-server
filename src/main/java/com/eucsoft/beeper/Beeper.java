@@ -1,6 +1,7 @@
 package com.eucsoft.beeper;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,11 +15,11 @@ public class Beeper {
 
 	private static Beeper beeper;
 	
-	private Collection<User> users = new HashSet<User>(); 
+	private Collection<User> users = Collections.synchronizedSet(new HashSet<User>()); 
 	
-	private Collection<Room> rooms = new HashSet<Room>();
+	private Collection<Room> rooms = Collections.synchronizedSet(new HashSet<Room>());
 	
-	private Map<User, Date> bench = new HashMap<User, Date>(); 
+	private Map<User, Date> bench = Collections.synchronizedMap(new HashMap<User, Date>()); 
 	
 	private Map<User, ClientHandler> clientHandlers = new HashMap<User, ClientHandler>();
 	
@@ -32,7 +33,7 @@ public class Beeper {
 	}
 	
 	public Collection<User> getUsers() {
-		return users;
+		return Collections.unmodifiableCollection(users);
 	}
 
 	public void addUser(User user) {
@@ -44,7 +45,7 @@ public class Beeper {
 	}
 	
 	public Collection<Room> getRooms() {
-		return rooms;
+		return Collections.unmodifiableCollection(rooms);
 	}
 	
 	public void addRoom(Room room) {
@@ -56,7 +57,15 @@ public class Beeper {
 	}
 	
 	public Map<User, Date> getBench() {
-		return bench;
+		return Collections.unmodifiableMap(bench);
+	}
+	
+	public void addUserToBench(User user) {
+		bench.put(user,  new Date());
+	}
+	
+	public void removeUserFromBench(User user) {
+		bench.remove(user);
 	}
 	
 	public void addClientHandler(User user, ClientHandler handler) {
