@@ -39,7 +39,7 @@ public class ClientHandlerTest {
 	}
 
 	@Test
-	public void onGetRoom(User user) {
+	public void onGetRoom() {
 		ClientHandler clientHandler = new ClientHandler();
 		clientHandler.onGetRoom(new User());
 
@@ -49,7 +49,7 @@ public class ClientHandlerTest {
 	}
 
 	@Test
-	public void onMessageBegin(User user) {
+	public void onMessageBegin() {
 		ClientHandler clientHandler = new ClientHandler();
 		Room room = new Room();
 		User user1 = new User();
@@ -66,7 +66,7 @@ public class ClientHandlerTest {
 	}
 
 	@Test
-	public void onMessage(byte[] message, User user) {
+	public void onMessage() {
 		ClientHandler clientHandler = new ClientHandler();
 		Room room = new Room();
 		User user1 = new User();
@@ -83,7 +83,7 @@ public class ClientHandlerTest {
 	}
 
 	@Test
-	public void onMessageEnd(User user) {
+	public void onMessageEnd() {
 		ClientHandler clientHandler = new ClientHandler();
 		Room room = new Room();
 		User user1 = new User();
@@ -100,7 +100,16 @@ public class ClientHandlerTest {
 	}
 
 	@Test
-	public void onDisconnect(User user) {
+	public void onDisconnect() {
+		User user = new User();
+
+		ClientHandler clientHandler = new ClientHandler();
+		clientHandler.onConnect(user, "some user information");
+
+		Assert.assertEquals(Beeper.getInstance().getUsers().size(), 1);
+		
+		clientHandler.onDisconnect(user);
+		Assert.assertEquals(Beeper.getInstance().getUsers().size(), 0);
 	}
 
 	@Test
