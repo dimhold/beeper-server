@@ -24,7 +24,7 @@ public class Beeper {
 	
 	private Beeper(){}
 	
-	public static Beeper getInstance() {
+	public static synchronized Beeper getInstance() {
 		if (beeper == null) {
 			beeper = new Beeper();
 		}
