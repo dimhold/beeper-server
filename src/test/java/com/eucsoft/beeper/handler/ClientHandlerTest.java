@@ -1,5 +1,7 @@
 package com.eucsoft.beeper.handler;
 
+import static org.mockito.Mockito.*;
+
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -58,8 +60,9 @@ public class ClientHandlerTest {
 		room.addUser(user2);
 
 		ClientHandler clientHandler2 = Beeper.getInstance().getClientHandler(user2);
-
-		// Check that clientHandler2.sendMessageBigein is triggered;
+		verify(clientHandler2, times(1)).sendMessageBegin(user2);
+		
+		clientHandler.onMessageBegin(user1);
 	}
 
 	@Test
