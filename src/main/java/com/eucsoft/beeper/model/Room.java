@@ -20,6 +20,9 @@ public class Room {
 	}
 	
 	public void removeUser(User user) {
+		if (user.getRoom() != null) {
+			user.setRoom(null);
+		}
 		users.remove(user);
 	}
 	
