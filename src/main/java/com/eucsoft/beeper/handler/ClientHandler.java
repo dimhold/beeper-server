@@ -26,7 +26,7 @@ import com.eucsoft.beeper.model.User;
 	public void sendMessageBegin(User user) {
 	}
 	
-	public void sendMessage(byte[] message) {
+	public void sendMessage(byte[] message, User user) {
 	}
 	
 	public void sendMessageEnd(User user) {
