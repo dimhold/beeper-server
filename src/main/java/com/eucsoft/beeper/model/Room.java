@@ -12,6 +12,10 @@ public class Room {
 	}
 	
 	public void addUser(User user) {
+		if (user.getRoom() != null) {
+			user.getRoom().removeUser(user);
+		}
+		user.setRoom(this);
 		users.add(user);
 	}
 	
