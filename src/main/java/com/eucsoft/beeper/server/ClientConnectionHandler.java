@@ -21,6 +21,8 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
     private Beeper beeper = Beeper.getInstance();
     private User user = new User();
     
+    private ByteBuf out;
+    
     public ClientConnectionHandler(User user) {
 		super();
 		ClientHandler clientHandler = new ClientHandler();
@@ -38,6 +40,7 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
         out.discardReadBytes();
         out.writeBytes(in);
         ctx.flush();*/
+    	
     }
 
     @Override
@@ -49,6 +52,7 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
 
     @Override
     public void channelActive(final ChannelHandlerContext ctx) throws Exception {
+    	out = ctx.nextOutboundByteBuffer();
 		log.info("ECHO active "
 				+ NioUdtProvider.socketUDT(ctx.channel()).toStringOptions());
     }
@@ -58,6 +62,10 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
             throws Exception {
         return ChannelHandlerUtil.allocate(ctx,
                 ctx.channel().config().getOption(ChannelOption.SO_RCVBUF));
+    }
+    
+    public void sendResponse(byte[] message) {
+    	out.writeBytes(message, 0, message.length);
     }
 	
 }
