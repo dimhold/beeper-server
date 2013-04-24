@@ -59,7 +59,10 @@ public class CommandsReaderTestDP {
 			ITestContext context) {
 		List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
 
-		dataToBeReturned.add(new Object[] { "{\"command\":\"message\"" });
+		dataToBeReturned.add(new Object[] { CommandsReader.MESSAGE_START+"message" });
+		dataToBeReturned.add(new Object[] { CommandsReader.MESSAGE_START+"message"+CommandsReader.DATA_DELIMETER});
+		dataToBeReturned.add(new Object[] { CommandsReader.MESSAGE_START+"message"+CommandsReader.DATA_DELIMETER+"sddgfdgsdfg" });
+		dataToBeReturned.add(new Object[] { CommandsReader.MESSAGE_START+"message"+CommandsReader.DATA_DELIMETER+"dsfasdifjalsdjfdsoijf dsfa dofjsflaskjd fdsofj" });
 
 		return dataToBeReturned.iterator();
 	}
@@ -70,7 +73,7 @@ public class CommandsReaderTestDP {
 		List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
 
 		dataToBeReturned
-				.add(new Object[] { "{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}" });
+				.add(new Object[] { CommandsReader.MESSAGE_START+"message"+CommandsReader.DATA_DELIMETER+"sddgfdgsdfg"+CommandsReader.MESSAGE_END });
 
 		return dataToBeReturned.iterator();
 	}

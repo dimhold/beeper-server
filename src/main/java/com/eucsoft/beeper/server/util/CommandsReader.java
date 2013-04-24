@@ -7,7 +7,11 @@ import java.util.List;
 public class CommandsReader {
 
 	private byte[] reminder = new byte[0];
-
+	
+	public static final String MESSAGE_START = "<<<<";
+	public static final String MESSAGE_END = ">>>>";
+	public static final String DATA_DELIMETER = "****";
+	
 	private static final byte START = '{';
 	private static final byte END = '}';
 
