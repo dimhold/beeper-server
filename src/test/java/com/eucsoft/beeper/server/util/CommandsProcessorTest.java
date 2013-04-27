@@ -8,39 +8,39 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
-public class CommandsReaderTest {
+public class CommandsProcessorTest {
 
-	@Test(dataProviderClass = CommandsReaderTestDP.class, dataProvider = "getCommandsPartCommandTest")
+	@Test(dataProviderClass = CommandsProcessorTestDP.class, dataProvider = "getCommandsPartCommandTest")
 	public void getCommandsPartCommandTest(String testString) {
-		CommandsReader bufUtils = new CommandsReader();
+		CommandsProcessor bufUtils = new CommandsProcessor();
 		List<byte[]> res = bufUtils.getCommands(testString.getBytes());
 		
 		assertTrue(res.isEmpty());
 	}
 
-	@Test(dataProviderClass = CommandsReaderTestDP.class, dataProvider = "getCommandsEntireCommandTest")
+	@Test(dataProviderClass = CommandsProcessorTestDP.class, dataProvider = "getCommandsEntireCommandTest")
 	public void getCommandsEntireCommandTest(String testString) {
-		CommandsReader bufUtils = new CommandsReader();
+		CommandsProcessor bufUtils = new CommandsProcessor();
 		List<byte[]> res = bufUtils.getCommands(testString.getBytes());
 		
 		assertEquals(res.size(), 1);
 		assertTrue(Arrays.equals(res.get(0), testString.getBytes()));
 	}
 
-	@Test(dataProviderClass = CommandsReaderTestDP.class, dataProvider = "getCommandsMoreThanCommandTest")
+	@Test(dataProviderClass = CommandsProcessorTestDP.class, dataProvider = "getCommandsMoreThanCommandTest")
 	public void getCommandsMoreThanOneCommandTest(String testString,
 			String expected) {
-		CommandsReader bufUtils = new CommandsReader();
+		CommandsProcessor bufUtils = new CommandsProcessor();
 		List<byte[]> res = bufUtils.getCommands(testString.getBytes());
 		
 		assertEquals(res.size(), 1);
 		assertTrue(Arrays.equals(res.get(0), expected.getBytes()));
 	}
 
-	@Test(dataProviderClass = CommandsReaderTestDP.class, dataProvider = "getCommandsSeveralCommandsTest")
+	@Test(dataProviderClass = CommandsProcessorTestDP.class, dataProvider = "getCommandsSeveralCommandsTest")
 	public void getCommandsSeveralCommandsTest(String testString,
 			List<String> expected) {
-		CommandsReader bufUtils = new CommandsReader();
+		CommandsProcessor bufUtils = new CommandsProcessor();
 		List<byte[]> res = bufUtils.getCommands(testString.getBytes());
 		assertEquals(res.size(), expected.size());
 		for (int i = 0; i < res.size(); i++) {
@@ -49,9 +49,9 @@ public class CommandsReaderTest {
 		}
 	}
 
-	@Test(dataProviderClass = CommandsReaderTestDP.class, dataProvider = "getCommandsComplexTest")
+	@Test(dataProviderClass = CommandsProcessorTestDP.class, dataProvider = "getCommandsComplexTest")
 	public void getCommandsComplexTest(String[] testStrings, String[] expected) {
-		CommandsReader bufUtils = new CommandsReader();
+		CommandsProcessor bufUtils = new CommandsProcessor();
 		// ByteBuf byteBuf = Unpooled.buffer();
 		List<byte[]> res = new ArrayList<byte[]>();
 		for (String s : testStrings) {
