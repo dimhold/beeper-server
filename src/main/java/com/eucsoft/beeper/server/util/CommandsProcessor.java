@@ -50,7 +50,15 @@ public class CommandsProcessor {
 	}
 	
 	private Command buildCommand(byte[] commandBytes) {
-		
+		int delimeterIndex = 0;
+		for(int i = COMMAND_START.length()-1; i< commandBytes.length;i++){
+			if (commandBytes[i] == COMMAND_END.charAt(delimeterIndex)){
+				delimeterIndex++;
+				if (delimeterIndex == DATA_DELIMETER.length()) {
+					
+				}
+			}
+		}
 		return null;
 	}
 

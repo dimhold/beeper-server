@@ -17,6 +17,7 @@ public class CommandsProcessorTestDP {
 	@DataProvider
 	public static Iterator<Object[]> getCommandsComplexTest(ITestContext context) {
 		List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+		Random rand = new Random();
 		
 		for (CommandType command : CommandType.values()) {
 			String[] expected = new String[] {
@@ -34,8 +35,7 @@ public class CommandsProcessorTestDP {
 			for (String s : expected) {
 				entireString.append(s);
 			}
-
-			Random rand = new Random();
+			
 			List<String> testData;
 			for (int i = 0; i < TEST_DATA_COUNT; i++) {
 				testData = new ArrayList<>();
