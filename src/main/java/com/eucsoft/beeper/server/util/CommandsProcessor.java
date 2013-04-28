@@ -11,8 +11,8 @@ public class CommandsProcessor {
 
 	private byte[] reminder = new byte[0];
 
-	public static final String COMMAND_START = "<<<<";
-	public static final String COMMAND_END = ">>>>";
+	public static final String COMMAND_START = "<<<<COMMANDSTART";
+	public static final String COMMAND_END = "COMMANDEND>>>>";
 	public static final String DATA_DELIMETER = "****";
 
 	private int commandStartIndex = 0;
