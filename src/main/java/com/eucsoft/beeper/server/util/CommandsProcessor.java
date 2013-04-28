@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.eucsoft.beeper.server.command.Command;
+import com.eucsoft.beeper.server.command.CommandType;
 
 public class CommandsProcessor {
 
@@ -17,8 +18,8 @@ public class CommandsProcessor {
 	private int commandStartIndex = 0;
 	private int commandEndIndex = 0;
 
-	public List<byte[]> getCommands(byte[] buffer) {
-		List<byte[]> result = new ArrayList<>();
+	public List<Command> getCommands(byte[] buffer) {
+		List<byte[]> byteCommands = new ArrayList<>();
 		int lastEndIndex = 0;
 		for (int i = 0; i < buffer.length; i++) {
 			if (buffer[i] == COMMAND_END.charAt(commandEndIndex)) {
@@ -37,7 +38,7 @@ public class CommandsProcessor {
 						index++;
 					}
 
-					result.add(res);
+					byteCommands.add(res);
 					reminder = new byte[0];
 					lastEndIndex = i + 1;
 				}
@@ -46,20 +47,34 @@ public class CommandsProcessor {
 
 		reminder = joinArrays(reminder,
 				Arrays.copyOfRange(buffer, lastEndIndex, buffer.length));
+		
+		List<Command> result = new ArrayList<>();
+		
+		for(byte[] commandBytes: byteCommands){
+			result.add(buildCommand(commandBytes));
+		}
+		
 		return result;
 	}
 	
 	private Command buildCommand(byte[] commandBytes) {
 		int delimeterIndex = 0;
+		Command result = new Command();
 		for(int i = COMMAND_START.length()-1; i< commandBytes.length;i++){
-			if (commandBytes[i] == COMMAND_END.charAt(delimeterIndex)){
+			if (commandBytes[i] == DATA_DELIMETER.charAt(delimeterIndex)){
 				delimeterIndex++;
 				if (delimeterIndex == DATA_DELIMETER.length()) {
-					
+					delimeterIndex = 0;
+					byte[] command = new byte[i-DATA_DELIMETER.length()-COMMAND_START.length()+1];
+					System.arraycopy(commandBytes, COMMAND_START.length(), command, 0, command.length);
+					result.setType(CommandType.valueOf(new String(command)));
+					byte[] data = new byte[commandBytes.length-DATA_DELIMETER.length()-COMMAND_END.length()-COMMAND_START.length()-command.length];
+					System.arraycopy(commandBytes, COMMAND_START.length()+command.length+DATA_DELIMETER.length(), data, 0, data.length);
+					result.setData(data);
 				}
 			}
 		}
-		return null;
+		return result;
 	}
 
 	private byte[] joinArrays(byte[] a, byte[] b) {
