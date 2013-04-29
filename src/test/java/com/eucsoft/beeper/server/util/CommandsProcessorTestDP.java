@@ -23,27 +23,27 @@ public class CommandsProcessorTestDP {
 		
 		result.add(baseData);
 		
-		for (int i =0;i<COMMAND_END.length();i++){
+		for (int i =1;i<COMMAND_END.length();i++){
 			result.add(baseData + COMMAND_END.substring(0, i));
 		}
 		
-		for (int i =0;i<COMMAND_START.length();i++){
+		for (int i =1;i<COMMAND_START.length();i++){
 			result.add(baseData + COMMAND_START.substring(0, i));
 		}
 		
-		for (int i =0;i<DATA_DELIMETER.length();i++){
+		for (int i =1;i<DATA_DELIMETER.length();i++){
 			result.add(baseData + DATA_DELIMETER.substring(0, i));
 		}
 		
-		for (int i =0;i<COMMAND_END.length();i++){
+		for (int i =1;i<COMMAND_END.length();i++){
 			result.add(baseData + COMMAND_END.substring(0, i) + baseData);
 		}
 		
-		for (int i =0;i<COMMAND_START.length();i++){
+		for (int i =1;i<COMMAND_START.length();i++){
 			result.add(baseData + COMMAND_START.substring(0, i) + baseData);
 		}
 		
-		for (int i =0;i<DATA_DELIMETER.length();i++){
+		for (int i =1;i<DATA_DELIMETER.length();i++){
 			result.add(baseData + DATA_DELIMETER.substring(0, i) + baseData);
 		}
 

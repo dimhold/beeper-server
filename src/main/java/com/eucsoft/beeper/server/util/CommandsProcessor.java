@@ -42,6 +42,11 @@ public class CommandsProcessor {
 					reminder = new byte[0];
 					lastEndIndex = i + 1;
 				}
+			} else {
+				commandEndIndex = 0;
+				if (buffer[i] == COMMAND_END.charAt(commandEndIndex)){
+					commandEndIndex++;
+				}
 			}
 		}
 
