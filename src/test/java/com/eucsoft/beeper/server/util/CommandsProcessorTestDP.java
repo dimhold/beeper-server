@@ -18,32 +18,32 @@ public class CommandsProcessorTestDP {
 
 	private static List<String> getDataStrings() {
 		List<String> result = new ArrayList<>();
-		
+
 		String baseData = "!sddgfdgsdfg!";
-		
+
 		result.add(baseData);
-		
-		for (int i =1;i<COMMAND_END.length();i++){
+
+		for (int i = 1; i < COMMAND_END.length(); i++) {
 			result.add(baseData + COMMAND_END.substring(0, i));
 		}
-		
-		for (int i =1;i<COMMAND_START.length();i++){
+
+		for (int i = 1; i < COMMAND_START.length(); i++) {
 			result.add(baseData + COMMAND_START.substring(0, i));
 		}
-		
-		for (int i =1;i<DATA_DELIMETER.length();i++){
+
+		for (int i = 1; i < DATA_DELIMETER.length(); i++) {
 			result.add(baseData + DATA_DELIMETER.substring(0, i));
 		}
-		
-		for (int i =1;i<COMMAND_END.length();i++){
+
+		for (int i = 1; i < COMMAND_END.length(); i++) {
 			result.add(baseData + COMMAND_END.substring(0, i) + baseData);
 		}
-		
-		for (int i =1;i<COMMAND_START.length();i++){
+
+		for (int i = 1; i < COMMAND_START.length(); i++) {
 			result.add(baseData + COMMAND_START.substring(0, i) + baseData);
 		}
-		
-		for (int i =1;i<DATA_DELIMETER.length();i++){
+
+		for (int i = 1; i < DATA_DELIMETER.length(); i++) {
 			result.add(baseData + DATA_DELIMETER.substring(0, i) + baseData);
 		}
 
@@ -116,9 +116,8 @@ public class CommandsProcessorTestDP {
 						+ command.toString() });
 				dataToBeReturned.add(new Object[] { COMMAND_START
 						+ command.toString() + DATA_DELIMETER });
-				dataToBeReturned
-						.add(new Object[] { COMMAND_START + command.toString()
-								+ DATA_DELIMETER + data });
+				dataToBeReturned.add(new Object[] { COMMAND_START
+						+ command.toString() + DATA_DELIMETER + data });
 				dataToBeReturned.add(new Object[] { COMMAND_START
 						+ command.toString() + DATA_DELIMETER
 						+ "dsfasdifjalsdjfdsoijf dsfa dofjsflaskjd fdsofj" });
@@ -200,4 +199,19 @@ public class CommandsProcessorTestDP {
 		return dataToBeReturned.iterator();
 	}
 
+	@DataProvider
+	public static Iterator<Object[]> buildByteArrayTest(ITestContext context) {
+		List<Object[]> dataToBeReturned = new ArrayList<Object[]>();
+		for (String data : getDataStrings())
+			for (CommandType commandType : CommandType.values()) {
+				Command command = new Command();
+				command.setData(data.getBytes());
+				command.setType(commandType);
+				dataToBeReturned.add(new Object[] {
+						command,
+						COMMAND_START + commandType.toString() + DATA_DELIMETER
+								+ data + COMMAND_END });
+			}
+		return dataToBeReturned.iterator();
+	}
 }

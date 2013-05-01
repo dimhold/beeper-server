@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.testng.annotations.Test;
@@ -64,4 +65,14 @@ public class CommandsProcessorTest {
 			assertTrue(res.get(i).equals(expected.get(i)));
 		}
 	}
+	
+	@Test(dataProviderClass = CommandsProcessorTestDP.class, dataProvider = "buildByteArrayTest")
+	public void buildByteArrayTest(Command command,
+			String expected) {
+		CommandsProcessor commandsProcessor = new CommandsProcessor();
+		byte[] res = commandsProcessor.buildByteArray(command);
+
+		assertTrue(Arrays.equals(res, expected.getBytes()));
+	}
+	
 }
