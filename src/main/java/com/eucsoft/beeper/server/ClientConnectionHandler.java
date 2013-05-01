@@ -7,35 +7,36 @@ import io.netty.channel.ChannelInboundByteHandlerAdapter;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.udt.nio.NioUdtProvider;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.eucsoft.beeper.Beeper;
 import com.eucsoft.beeper.handler.ClientHandler;
-import com.eucsoft.beeper.model.User;
+import com.eucsoft.beeper.server.command.Command;
+import com.eucsoft.beeper.server.util.CommandsProcessor;
 
 public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
 
     private static final Logger log = Logger.getLogger(ClientConnectionHandler.class.getName());
     
-    private Beeper beeper = Beeper.getInstance();
-    private User user = new User();
+    private ClientHandler clientHandler;
+    private CommandsProcessor commandsProcessor;
     
     private ByteBuf out;
     
-    public ClientConnectionHandler(User user) {
+    public ClientConnectionHandler() {
 		super();
-		ClientHandler clientHandler = new ClientHandler();
-		this.user = user;
-		beeper.addUser(user);
-		beeper.addClientHandler(user, clientHandler);
+		clientHandler = new ClientHandler();
 	}
 
 	@Override
     public void inboundBufferUpdated(final ChannelHandlerContext ctx,
             final ByteBuf in) {
-    	ClientHandler handler = beeper.getClientHandler(user);
-    	handler.onMessageBegin();
+		List<Command> commands = commandsProcessor.getCommands(in.array());
+		
+		for (Command command : commands){
+			dispatchCommand(command);
+		}
         /*final ByteBuf out = ctx.nextOutboundByteBuffer();
         out.discardReadBytes();
         out.writeBytes(in);
@@ -66,6 +67,29 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
     
     public void sendResponse(byte[] message) {
     	out.writeBytes(message, 0, message.length);
+    }
+    
+    private void dispatchCommand(Command command){
+    	switch (command.getType()) {
+		case CONNECT:
+			clientHandler.onConnect(new String(command.getData()));
+			break;
+		case GET_ROOM:
+			clientHandler.onGetRoom();
+			break;
+		case MESSAGE_BEGIN:
+			clientHandler.onMessageBegin();
+			break;
+		case MESSAGE:
+			clientHandler.onMessage(command.getData());
+			break;
+		case MESSAGE_END:
+			clientHandler.onMessageEnd();
+			break;
+		case DISCONNECT:
+			clientHandler.onDisconnect();
+			break;
+		}
     }
 	
 }
