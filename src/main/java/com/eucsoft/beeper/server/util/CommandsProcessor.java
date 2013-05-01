@@ -19,6 +19,10 @@ public class CommandsProcessor {
 	private int commandEndIndex = 0;
 
 	public List<Command> getCommands(byte[] buffer) {
+		List<Command> result = new ArrayList<>();
+		if (buffer == null){
+			return result;
+		}
 		List<byte[]> byteCommands = new ArrayList<>();
 		int lastEndIndex = 0;
 		for (int i = 0; i < buffer.length; i++) {
@@ -52,8 +56,6 @@ public class CommandsProcessor {
 
 		reminder = joinArrays(reminder,
 				Arrays.copyOfRange(buffer, lastEndIndex, buffer.length));
-		
-		List<Command> result = new ArrayList<>();
 		
 		for(byte[] commandBytes: byteCommands){
 			result.add(buildCommand(commandBytes));
