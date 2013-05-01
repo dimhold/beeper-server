@@ -81,6 +81,29 @@ public class CommandsProcessor {
 		}
 		return result;
 	}
+	
+	public byte[] buildByteArray(Command command){
+		int length = COMMAND_START.length() + command.getType().toString().length() + DATA_DELIMETER.length() + command.getData().length + COMMAND_END.length();
+		byte[] result = new byte[length];
+		int index = 0;
+		byte[] src = COMMAND_START.getBytes();
+		System.arraycopy(src, 0, result, index, src.length);
+		index += src.length;
+		src = command.getType().toString().getBytes();
+		System.arraycopy(src, 0, result, index, src.length);
+		index += src.length;
+		src = DATA_DELIMETER.getBytes();
+		System.arraycopy(src, 0, result, index, src.length);
+		index += src.length;
+		src = command.getData();
+		System.arraycopy(src, 0, result, index, src.length);
+		index += src.length;
+		src = COMMAND_END.getBytes();
+		System.arraycopy(src, 0, result, index, src.length);
+		index += src.length;
+		
+		return result;
+	}
 
 	private byte[] joinArrays(byte[] a, byte[] b) {
 		byte[] result = new byte[a.length + b.length];
