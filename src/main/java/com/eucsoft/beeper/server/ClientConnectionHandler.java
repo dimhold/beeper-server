@@ -37,11 +37,6 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
 		for (Command command : commands){
 			dispatchCommand(command);
 		}
-        /*final ByteBuf out = ctx.nextOutboundByteBuffer();
-        out.discardReadBytes();
-        out.writeBytes(in);
-        ctx.flush();*/
-    	
     }
 
     @Override
