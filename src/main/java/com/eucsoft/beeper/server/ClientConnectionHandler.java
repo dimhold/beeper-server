@@ -27,13 +27,14 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
     public ClientConnectionHandler() {
 		super();
 		clientHandler = new ClientHandler();
+		commandsProcessor = new CommandsProcessor();
 	}
 
 	@Override
     public void inboundBufferUpdated(final ChannelHandlerContext ctx,
             final ByteBuf in) {
 		List<Command> commands = commandsProcessor.getCommands(in.array());
-		
+
 		for (Command command : commands){
 			dispatchCommand(command);
 		}
