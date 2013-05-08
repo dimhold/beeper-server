@@ -2,6 +2,7 @@ package com.eucsoft.beeper.handler;
 
 import com.eucsoft.beeper.Beeper;
 import com.eucsoft.beeper.logging.AudioLogger;
+import com.eucsoft.beeper.model.Room;
 import com.eucsoft.beeper.model.User;
 
  public class ClientHandler {
@@ -9,13 +10,17 @@ import com.eucsoft.beeper.model.User;
 	private User user;
 	private Beeper beeper = Beeper.getInstance();
 	AudioLogger logger;
-	 
+	
 	public void onConnect(String userInfo) {
 		user = new User(userInfo);
 		beeper.addUser(user);
 	}
 	
 	public void onGetRoom() {
+		Room currentRoom = user.getRoom();
+		if (currentRoom != null) {
+			currentRoom.removeUser(user);
+		}
 		beeper.addUserToBench(user);
 	}
 	
