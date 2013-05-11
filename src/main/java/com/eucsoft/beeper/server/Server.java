@@ -44,7 +44,7 @@ public class Server {
 								throws Exception {
 							ch.pipeline().addLast(
 									new LoggingHandler(LogLevel.INFO),
-									new ClientConnectionHandler(new User()));
+									new ClientConnectionHandler());
 						}
 					});
 			// Start the server.
