@@ -12,13 +12,11 @@ public class BenchDemon implements Runnable {
 	private long sleepDuration = 1000;
 	private boolean stop = false;
 	
-	public BenchDemon(long sleepDuration) {
-		super();
-		this.sleepDuration = sleepDuration;
+	public BenchDemon() {
 	}
 	
-	public BenchDemon() {
-		super();
+	public BenchDemon(long sleepDuration) {
+		this.sleepDuration = sleepDuration;
 	}
 	
 	public void stop() {
