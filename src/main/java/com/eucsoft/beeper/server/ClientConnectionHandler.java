@@ -19,23 +19,17 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
     private static final Logger log = Logger.getLogger(ClientConnectionHandler.class.getName());
     
     private Beeper beeper = Beeper.getInstance();
-    private User user = new User();
-    
     private ByteBuf out;
     
     public ClientConnectionHandler(User user) {
 		super();
 		ClientHandler clientHandler = new ClientHandler();
-		this.user = user;
-		beeper.addUser(user);
 		beeper.addClientHandler(user, clientHandler);
 	}
 
 	@Override
     public void inboundBufferUpdated(final ChannelHandlerContext ctx,
             final ByteBuf in) {
-    	ClientHandler handler = beeper.getClientHandler(user);
-    	handler.onMessageBegin();
         /*final ByteBuf out = ctx.nextOutboundByteBuffer();
         out.discardReadBytes();
         out.writeBytes(in);
