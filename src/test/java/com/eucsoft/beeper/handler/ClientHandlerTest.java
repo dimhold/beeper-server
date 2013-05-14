@@ -1,14 +1,18 @@
 package com.eucsoft.beeper.handler;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.testng.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 
+import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.annotations.Test;
 
 import com.eucsoft.beeper.Beeper;
-import com.eucsoft.beeper.model.Room;
+import com.eucsoft.beeper.logging.AudioLogger;
 import com.eucsoft.beeper.model.User;
+import com.eucsoft.bench.BenchDemon;
 
 @PrepareForTest(ClientHandler.class)
 public class ClientHandlerTest {
@@ -40,6 +44,7 @@ public class ClientHandlerTest {
 	@Test
 	public void onGetRoom() {
 		ClientHandler clientHandler = new ClientHandler();
+		clientHandler.onConnect("user");
 		clientHandler.onGetRoom();
 
 		int expected = 1;
@@ -50,13 +55,13 @@ public class ClientHandlerTest {
 	@Test
 	public void onMessageBegin() {
 		ClientHandler clientHandler = new ClientHandler();
-		Room room = new Room();
-		User user1 = new User();
-		User user2 = new User();
-		room.addUser(user1);
-		room.addUser(user2);
-
-		ClientHandler clientHandler2 = mock(ClientHandler.class);
+		clientHandler.onConnect("user1");
+		clientHandler.onGetRoom();
+		clientHandler.logger = mock(AudioLogger.class);
+		doNothing().when(clientHandler.logger).append(null);
+		
+		ClientHandler clientHandler2 = mockClientHandler();
+		
 		clientHandler.onMessageBegin();
 		
 		verify(clientHandler2).sendMessageBegin();
@@ -65,13 +70,13 @@ public class ClientHandlerTest {
 	@Test
 	public void onMessage() {
 		ClientHandler clientHandler = new ClientHandler();
-		Room room = new Room();
-		User user1 = new User();
-		User user2 = new User();
-		room.addUser(user1);
-		room.addUser(user2);
+		clientHandler.onConnect("user1");
+		clientHandler.onGetRoom();
+		clientHandler.logger = mock(AudioLogger.class);
+		doNothing().when(clientHandler.logger).append(null);
 
-		ClientHandler clientHandler2 = mock(ClientHandler.class);
+		ClientHandler clientHandler2 = mockClientHandler();
+		
 		clientHandler.onMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes());
 		
 		verify(clientHandler2).sendMessage("{\"command\":\"message\",\"data\":ldjkfdlfjlfkj}".getBytes());
@@ -80,13 +85,13 @@ public class ClientHandlerTest {
 	@Test
 	public void onMessageEnd() {
 		ClientHandler clientHandler = new ClientHandler();
-		Room room = new Room();
-		User user1 = new User();
-		User user2 = new User();
-		room.addUser(user1);
-		room.addUser(user2);
+		clientHandler.onConnect("user1");
+		clientHandler.onGetRoom();
+		clientHandler.logger = mock(AudioLogger.class);
+		doNothing().when(clientHandler.logger).append(null);
 
-		ClientHandler clientHandler2 = mock(ClientHandler.class);
+		ClientHandler clientHandler2 = mockClientHandler();
+		
 		clientHandler.onMessageEnd();
 
 		verify(clientHandler2).sendMessageEnd();
@@ -94,8 +99,6 @@ public class ClientHandlerTest {
 
 	@Test
 	public void onDisconnect() {
-		User user = new User();
-
 		ClientHandler clientHandler = new ClientHandler();
 		clientHandler.onConnect("some user information");
 
@@ -105,21 +108,18 @@ public class ClientHandlerTest {
 		assertEquals(Beeper.getInstance().getUsers().size(), 0);
 	}
 
-	@Test
-	public void sendMessageBegin() {
+	private ClientHandler mockClientHandler () {
+		ClientHandler clientHandler2 = mock(ClientHandler.class);
 		
-	}
-
-	@Test
-	public void sendMessage() {
-	}
-
-	@Test
-	public void sendMessageEnd() {
-	}
-
-	@Test
-	public void sendChangeRoom() {
+		Mockito.doCallRealMethod().when(clientHandler2).onConnect("user2");
+		Mockito.doCallRealMethod().when(clientHandler2).onGetRoom();
+		clientHandler2.onConnect("user2");
+		clientHandler2.onGetRoom();
+		
+		BenchDemon benchDemon = new BenchDemon(0);
+		benchDemon.stop();
+		benchDemon.run();
+		return clientHandler2;
 	}
 
 }

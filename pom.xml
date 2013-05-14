@@ -13,7 +13,7 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<netty.version>4.0.0.CR1</netty.version>
-		<slf4j.version>1.7.5</slf4j.version>		
+		<slf4j.version>1.7.5</slf4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,50 +34,50 @@
 			<version>${powermock.version}</version>
 			<scope>test</scope>
 		</dependency>
-		 <dependency>
-	      <groupId>io.netty</groupId>
-	      <artifactId>netty-transport</artifactId>
-	      <version>${netty.version}</version>
-	    </dependency>
-	    <dependency>
-	      <groupId>io.netty</groupId>
-	      <artifactId>netty-transport-sctp</artifactId>
-	      <version>${netty.version}</version>
-	    </dependency>
-	    <dependency>
-	      <groupId>io.netty</groupId>
-	      <artifactId>netty-handler</artifactId>
-	      <version>${netty.version}</version>
-	    </dependency>
-	    <dependency>
-	      <groupId>io.netty</groupId>
-	      <artifactId>netty-codec-http</artifactId>
-	      <version>${netty.version}</version>
-	    </dependency>
-	    <dependency>
-	      <groupId>io.netty</groupId>
-	      <artifactId>netty-codec-socks</artifactId>
-	      <version>${netty.version}</version>
-	    </dependency>
-	    <dependency>
-	      <groupId>io.netty</groupId>
-	      <artifactId>netty-transport-udt</artifactId>
-	      <version>${netty.version}</version>
-	    </dependency>
-	    <dependency>
-	      <groupId>io.netty</groupId>
-	      <artifactId>netty-transport-rxtx</artifactId>
-	      <version>${netty.version}</version>
-	    </dependency>
-       <dependency>
-		   <groupId>org.slf4j</groupId>
-		   <artifactId>slf4j-api</artifactId>
-		   <version>${slf4j.version}</version>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-transport</artifactId>
+			<version>${netty.version}</version>
 		</dependency>
 		<dependency>
-		   <groupId>org.slf4j</groupId>
-		   <artifactId>slf4j-simple</artifactId>
-		   <version>${slf4j.version}</version>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-transport-sctp</artifactId>
+			<version>${netty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-handler</artifactId>
+			<version>${netty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-codec-http</artifactId>
+			<version>${netty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-codec-socks</artifactId>
+			<version>${netty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-transport-udt</artifactId>
+			<version>${netty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-transport-rxtx</artifactId>
+			<version>${netty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j.version}</version>
 		</dependency>
 	</dependencies>
 </project>

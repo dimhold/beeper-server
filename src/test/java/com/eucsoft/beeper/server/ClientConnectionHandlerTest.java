@@ -3,8 +3,8 @@ package com.eucsoft.beeper.server;
 //import static org.powermock.api.mockito.PowerMockito.*;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import io.netty.buffer.ByteBuf;
 
 import org.mockito.Mockito;

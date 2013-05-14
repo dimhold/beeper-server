@@ -13,22 +13,19 @@ import com.eucsoft.beeper.model.User;
 
 public class Beeper {
 
-	private static Beeper beeper;
+	private static Beeper beeper = new Beeper();
 	
-	private Collection<User> users = Collections.synchronizedSet(new HashSet<User>()); 
+	private Collection<User> users = new HashSet<User>(); 
 	
-	private Collection<Room> rooms = Collections.synchronizedSet(new HashSet<Room>());
+	private Collection<Room> rooms = new HashSet<Room>();
 	
-	private Map<User, Date> bench = Collections.synchronizedMap(new HashMap<User, Date>()); 
+	private Map<User, Date> bench = new HashMap<User, Date>(); 
 	
 	private Map<User, ClientHandler> clientHandlers = new HashMap<User, ClientHandler>();
 	
 	private Beeper(){}
 	
-	public static synchronized Beeper getInstance() {
-		if (beeper == null) {
-			beeper = new Beeper();
-		}
+	public static Beeper getInstance() {
 		return beeper;
 	}
 	
@@ -37,11 +34,15 @@ public class Beeper {
 	}
 
 	public void addUser(User user) {
-		users.add(user);
+		synchronized (users) {
+			users.add(user);
+		}
 	}
 	
 	public void removeUser(User user) {
-		users.remove(user);
+		synchronized (users) {
+			users.remove(user);
+		}
 	}
 	
 	public Collection<Room> getRooms() {
@@ -49,11 +50,15 @@ public class Beeper {
 	}
 	
 	public void addRoom(Room room) {
-		rooms.add(room);
+		synchronized (rooms) {
+			rooms.add(room);
+		}
 	}
 	
 	public void removeRoom(Room room) {
-		rooms.remove(room);
+		synchronized (rooms) {
+			rooms.remove(room);
+		}
 	}
 	
 	public Map<User, Date> getBench() {
@@ -61,19 +66,27 @@ public class Beeper {
 	}
 	
 	public void addUserToBench(User user) {
-		bench.put(user,  new Date());
+		synchronized (bench) {
+			bench.put(user,  new Date());
+		}
 	}
 	
 	public void removeUserFromBench(User user) {
-		bench.remove(user);
+		synchronized (bench) {
+			bench.remove(user);
+		}
 	}
 	
 	public void addClientHandler(User user, ClientHandler handler) {
-		clientHandlers.put(user, handler);
+		synchronized (clientHandlers) {
+			clientHandlers.put(user, handler);
+		}
 	}
 	
 	public ClientHandler getClientHandler(User user) {
-		return clientHandlers.get(user);
+		synchronized (clientHandlers) {
+			return clientHandlers.get(user);
+		}
 	}
 
 }
