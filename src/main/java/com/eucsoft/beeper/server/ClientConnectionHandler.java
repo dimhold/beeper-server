@@ -19,17 +19,11 @@ public class ClientConnectionHandler extends ChannelInboundByteHandlerAdapter {
 
     private static final Logger log = Logger.getLogger(ClientConnectionHandler.class.getName());
     
-    private ClientHandler clientHandler;
-    private CommandsProcessor commandsProcessor;
+    private ClientHandler clientHandler = new ClientHandler();
+    private CommandsProcessor commandsProcessor = new CommandsProcessor();
     
     private ByteBuf out;
     
-    public ClientConnectionHandler() {
-		super();
-		clientHandler = new ClientHandler();
-		commandsProcessor = new CommandsProcessor();
-	}
-
 	@Override
     public void inboundBufferUpdated(final ChannelHandlerContext ctx,
             final ByteBuf in) {
