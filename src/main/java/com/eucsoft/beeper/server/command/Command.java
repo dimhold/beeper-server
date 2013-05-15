@@ -6,6 +6,13 @@ public class Command {
 
 	private CommandType type;
 	private byte[] data;
+	
+	public Command(CommandType commandType) {
+		setType(commandType);
+	}
+	
+	public Command() {
+	}
 
 	public CommandType getType() {
 		return type;

@@ -5,6 +5,8 @@ import com.eucsoft.beeper.logging.AudioLogger;
 import com.eucsoft.beeper.model.Room;
 import com.eucsoft.beeper.model.User;
 import com.eucsoft.beeper.server.Response;
+import com.eucsoft.beeper.server.command.Command;
+import com.eucsoft.beeper.server.command.CommandType;
 
  public class ClientHandler {
 	
@@ -76,22 +78,22 @@ import com.eucsoft.beeper.server.Response;
 	
 	
 	public void sendMessageBegin() {
-		//TODO: User protocol specification
-		response.send("begin");
+		Command command = new Command(CommandType.MESSAGE_BEGIN);
+		response.send(command);
 	}
 	
 	public void sendMessage(byte[] message) {
-		//TODO: User protocol specification
-		response.send(message);
+		Command command = new Command(CommandType.MESSAGE);
+		response.send(command);
 	}
 	
 	public void sendMessageEnd() {
-		//TODO: User protocol specification
-		response.send("end");
+		Command command = new Command(CommandType.MESSAGE_END);
+		response.send(command);
 	}
 	
 	public void sendChangeRoom() {
-		//TODO: User protocol specification
-		response.send("changeRoom");
+		Command command = new Command(CommandType.GET_ROOM);
+		response.send(command);
 	}
 }
