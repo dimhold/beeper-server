@@ -73,7 +73,7 @@ import com.eucsoft.beeper.server.command.CommandType;
 		}
 		Beeper.getInstance().removeUserFromBench(user);
 		Beeper.getInstance().removeUser(user);
-		//TODO: remove clinetHandler!
+		Beeper.getInstance().removeClientHandler(this);
 	}
 	
 	
