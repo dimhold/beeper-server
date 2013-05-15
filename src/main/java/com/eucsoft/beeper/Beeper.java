@@ -73,8 +73,8 @@ public class Beeper {
 		return clientHandlers.get(user);
 	}
 	
-	public void removeClientHandler(User user) {
-		clientHandlers.remove(user);
+	public void removeClientHandler(ClientHandler clientHandler) {
+		clientHandlers.remove(clientHandler);
 	}
 
 }
