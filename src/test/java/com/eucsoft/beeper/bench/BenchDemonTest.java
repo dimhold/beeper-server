@@ -1,4 +1,4 @@
-package com.eucsoft.bench;
+package com.eucsoft.beeper.bench;
 
 import static org.testng.Assert.assertEquals;
 
@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.eucsoft.beeper.Beeper;
+import com.eucsoft.beeper.bench.BenchDemon;
 import com.eucsoft.beeper.model.User;
 
 public class BenchDemonTest {

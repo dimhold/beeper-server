@@ -10,9 +10,9 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.annotations.Test;
 
 import com.eucsoft.beeper.Beeper;
+import com.eucsoft.beeper.bench.BenchDemon;
 import com.eucsoft.beeper.logging.AudioLogger;
 import com.eucsoft.beeper.model.User;
-import com.eucsoft.bench.BenchDemon;
 
 @PrepareForTest(ClientHandler.class)
 public class ClientHandlerTest {

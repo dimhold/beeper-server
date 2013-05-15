@@ -1,5 +1,8 @@
 package com.eucsoft.beeper.server;
 
+import com.eucsoft.beeper.server.command.Command;
+import com.eucsoft.beeper.server.util.CommandsProcessor;
+
 import io.netty.buffer.ByteBuf;
 
 public class Response {
@@ -10,12 +13,12 @@ public class Response {
 		this.out = out;
 	}
 	
-	public void send(String message) {
-		this.send(message.getBytes());
+	public void send(Command command) {
+		CommandsProcessor commandsProcessor = new CommandsProcessor();
+		this.send(commandsProcessor.buildByteArray(command));
 	}
 	
 	public void send(byte[] message) {
-		//TODO: Invoke Transport layer adapter
 		out.writeBytes(message, 0, message.length);
 	}
 

@@ -1,4 +1,4 @@
-package com.eucsoft.bench;
+package com.eucsoft.beeper.bench;
 
 import java.util.ArrayList;
 import java.util.List;
