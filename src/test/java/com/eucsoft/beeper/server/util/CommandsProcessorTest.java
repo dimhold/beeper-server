@@ -13,6 +13,14 @@ import com.eucsoft.beeper.server.command.Command;
 
 public class CommandsProcessorTest {
 
+	@Test
+	public void getCommandsNullTest() {
+		CommandsProcessor commandsProcessor = new CommandsProcessor();
+		List<Command> res = commandsProcessor.getCommands(null);
+		
+		assertTrue(res.isEmpty());
+	}
+	
 	@Test(dataProviderClass = CommandsProcessorTestDP.class, dataProvider = "getCommandsPartCommandTest")
 	public void getCommandsPartCommandTest(String testString) {
 		CommandsProcessor commandsProcessor = new CommandsProcessor();

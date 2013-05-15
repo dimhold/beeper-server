@@ -12,7 +12,6 @@ import io.netty.handler.logging.LoggingHandler;
 
 import java.util.concurrent.ThreadFactory;
 
-import com.eucsoft.beeper.model.User;
 import com.eucsoft.beeper.server.util.UtilThreadFactory;
 
 public class Server {
